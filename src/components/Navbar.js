@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
-import { MapPin, LayoutDashboard, Map, LogOut, User, FileText } from 'lucide-react';
+import { LayoutDashboard, Map, LogOut, User, FileText } from 'lucide-react';
 
 const Navbar = ({ user }) => {
   const location = useLocation();

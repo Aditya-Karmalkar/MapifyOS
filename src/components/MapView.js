@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import L from 'leaflet';
-import { Search, X, Layers, MapPin, Navigation, Menu, LayoutDashboard, FileText, LogOut, User, Home, Plus, Minus } from 'lucide-react';
+import { X, Layers, MapPin, Navigation, Menu, LayoutDashboard, FileText, LogOut, User, Plus, Minus } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 
 // Fix for default markers
@@ -110,7 +110,7 @@ const MapController = ({ onLocationFound, searchResults, onMarkerClick }) => {
       craft: tags.craft
     };
 
-    for (const [key, value] of Object.entries(categoryMap)) {
+    for (const [, value] of Object.entries(categoryMap)) {
       if (value) {
         return value.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
       }
@@ -288,7 +288,7 @@ const MapController = ({ onLocationFound, searchResults, onMarkerClick }) => {
     return () => {
       map.off('click', handleMapClick);
     };
-  }, [map, onLocationFound, locationSet]);
+  }, [map, onLocationFound, locationSet, createPopupContent]);
 
   return null;
 };
@@ -331,7 +331,7 @@ const MapView = ({ user }) => {
       craft: tags.craft
     };
 
-    for (const [key, value] of Object.entries(categoryMap)) {
+    for (const [, value] of Object.entries(categoryMap)) {
       if (value) {
         return value.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
       }
@@ -594,11 +594,6 @@ const MapView = ({ user }) => {
     searchNearbyPOIs();
   };
 
-  const clearSearch = () => {
-    setSearchQuery('');
-    setSearchResults([]);
-    setSelectedMarker(null);
-  };
 
   const handleMarkerClick = async (result) => {
     setSelectedMarker(result);

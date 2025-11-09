@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, googleProvider, db } from '../firebase';
-import { Mail, Lock, Eye, EyeOff, Github } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);

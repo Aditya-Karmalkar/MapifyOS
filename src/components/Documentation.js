@@ -292,6 +292,7 @@ mapInstance.on("layerChange", (data) => {
                 <a
                   href="https://github.com/mapifyos/sdk"
                   target="_blank"
+                  rel="noreferrer"
                   className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors"
                 >
                   <div className="flex items-center justify-between">

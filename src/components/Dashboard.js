@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { collection, query, onSnapshot, addDoc, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { collection, query, onSnapshot, addDoc, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { Key, Plus, Trash2, Copy, Eye, EyeOff, Map, ExternalLink, Activity } from 'lucide-react';
@@ -339,6 +339,7 @@ const Dashboard = ({ user }) => {
                   <a 
                     href="https://mapifysdk.netlify.app" 
                     target="_blank"
+                    rel="noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-md hover:bg-gray-700"
                   >
                     🔗 SDK Homepage

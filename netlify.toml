@@ -1,10 +1,11 @@
 [build]
-  command = "pnpm install && pnpm run build"
+  command = "pnpm install && CI=false pnpm run build"
   publish = "build"
 
 [build.environment]
   NODE_VERSION = "18"
   PNPM_VERSION = "8"
+  CI = "false"
 
 [[redirects]]
   from = "/*"
