@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Mapify OS SDK</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #map {
+            height: 500px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        .info {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h2>🗺️ Mapify OS SDK Test</h2>
+        <p><strong>Note:</strong> You need a valid API key from your dashboard to test this.</p>
+        <p>The map will show an error if the API key is invalid.</p>
+    </div>
+    
+    <div id="map"></div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Your Mapify OS SDK -->
+    <script src="https://mapifysdk.netlify.app/v1/mapify.js"></script>
+    
+    <script>
+        // Test the SDK
+        MapifyOS.init("map", {
+            apiKey: "test-key-replace-with-real-key", // Replace with actual API key
+            center: [40.7128, -74.0060], // New York City
+            zoom: 13,
+            layer: "plain"
+        }).then(mapInstance => {
+            console.log("✅ Map initialized successfully!");
+            
+            // Listen for events
+            mapInstance.on("placeClick", (data) => {
+                console.log("📍 Place clicked:", data.data.name);
+            });
+            
+        }).catch(error => {
+            console.error("❌ Failed to initialize map:", error);
+            document.getElementById('map').innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #fee2e2; color: #dc2626; text-align: center; padding: 20px;">
+                    <div>
+                        <h3>❌ Map Initialization Failed</h3>
+                        <p>${error.message}</p>
+                        <p style="font-size: 14px; margin-top: 10px;">
+                            Make sure you have a valid API key from the Mapify OS dashboard.
+                        </p>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
