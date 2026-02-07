@@ -2,8 +2,8 @@
 
 The open, customizable alternative to Google Maps with built-in authentication, developer APIs, and JavaScript SDK.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://mapifyos.netlify.app/)
-[![SDK](https://img.shields.io/badge/JavaScript-SDK-green?style=for-the-badge)](https://mapifysdk.netlify.app/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://mapifyoscg.netlify.app/)
+[![SDK](https://img.shields.io/badge/JavaScript-SDK-green?style=for-the-badge)](https://mapifysdkoscg.netlify.app/)
 [![GitHub SDK](https://img.shields.io/badge/SDK-GitHub-black?style=for-the-badge)](https://github.com/Aditya-Karmalkar/sdk)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
