@@ -14,6 +14,10 @@ import Navbar from './components/Navbar';
 const AppContent = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    return saved ? JSON.parse(saved) : false;
+  });
   const location = useLocation();
 
   useEffect(() => {
@@ -25,9 +29,20 @@ const AppContent = () => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => setDarkMode(!darkMode);
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
       </div>
     );
@@ -35,7 +50,7 @@ const AppContent = () => {
 
   return (
     <div className="App">
-      {user && location.pathname !== '/map' && <Navbar user={user} />}
+      {user && location.pathname !== '/map' && <Navbar user={user} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />}
       <Routes>
         <Route 
           path="/login" 
