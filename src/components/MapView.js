@@ -695,31 +695,31 @@ const MapView = ({ user }) => {
       {/* Sidebar Toggle/Close Button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className={`absolute top-4 z-[1100] bg-white w-[60px] h-[60px] rounded-full shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 flex items-center justify-center transition-all duration-300 ${
+        className={`absolute top-4 z-[1100] bg-white dark:bg-slate-950 w-[60px] h-[60px] rounded-full shadow-lg hover:bg-gray-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center transition-all duration-300 ${
           sidebarOpen ? 'left-[336px]' : 'left-4'
         }`}
       >
         {sidebarOpen ? (
-          <X className="h-5 w-5 text-gray-700" />
+          <X className="h-5 w-5 text-gray-700 dark:text-gray-300" />
         ) : (
-          <Menu className="h-5 w-5 text-gray-700" />
+          <Menu className="h-5 w-5 text-gray-700 dark:text-gray-300" />
         )}
       </button>
 
       {/* Sidebar */}
-      <div className={`absolute top-0 left-0 h-full w-80 bg-white shadow-xl z-[1050] transform transition-transform duration-300 ease-in-out ${
+      <div className={`absolute top-0 left-0 h-full w-80 bg-white dark:bg-slate-950 shadow-xl z-[1050] transform transition-transform duration-300 ease-in-out ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="flex flex-col h-full">
           {/* Sidebar Header */}
-          <div className="flex items-center justify-center p-6 border-b border-gray-200">
+          <div className="flex items-center justify-center p-6 border-b border-gray-200 dark:border-gray-800">
             <div className="flex items-center space-x-3">
               <img 
                 src="/Logo_transparent.png" 
                 alt="Mapify OS Logo" 
                 className="h-8 w-auto"
               />
-              <span className="text-xl font-bold text-gray-900">Mapify OS</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-white">Mapify OS</span>
             </div>
           </div>
 
@@ -728,21 +728,21 @@ const MapView = ({ user }) => {
             <nav className="space-y-2">
               <Link
                 to="/dashboard"
-                className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+                className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 onClick={() => setSidebarOpen(false)}
               >
                 <LayoutDashboard className="h-5 w-5" />
                 <span>Dashboard</span>
               </Link>
 
-              <div className="flex items-center space-x-3 px-3 py-2 rounded-md bg-primary-100 text-primary-700">
+              <div className="flex items-center space-x-3 px-3 py-2 rounded-md bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
                 <MapPin className="h-5 w-5" />
                 <span>Map</span>
               </div>
 
               <Link
                 to="/documentation"
-                className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+                className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 onClick={() => setSidebarOpen(false)}
               >
                 <FileText className="h-5 w-5" />
@@ -752,16 +752,16 @@ const MapView = ({ user }) => {
           </div>
 
           {/* User Info & Sign Out */}
-          <div className="p-6 border-t border-gray-200">
+          <div className="p-6 border-t border-gray-200 dark:border-gray-800">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="bg-gray-100 p-2 rounded-full">
-                <User className="h-4 w-4 text-gray-600" />
+              <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded-full">
+                <User className="h-4 w-4 text-gray-600 dark:text-gray-300" />
               </div>
-              <span className="text-sm text-gray-700">{user.email}</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">{user.email}</span>
             </div>
             <button
               onClick={handleSignOut}
-              className="flex items-center space-x-2 w-full px-3 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+              className="flex items-center space-x-2 w-full px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 rounded-md transition-colors"
             >
               <LogOut className="h-4 w-4" />
               <span>Sign Out</span>
@@ -781,10 +781,10 @@ const MapView = ({ user }) => {
       {/* Animated Search Bar */}
       <div className="absolute top-4 left-20 z-[1000]">
         <form onSubmit={handleSearch}>
-          <div className="p-5 overflow-hidden w-[60px] h-[60px] hover:w-[270px] bg-white shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300">
-            <div className="flex items-center justify-center fill-black">
+          <div className="p-5 overflow-hidden w-[60px] h-[60px] hover:w-[270px] bg-white dark:bg-slate-950 shadow-[2px_2px_20px_rgba(0,0,0,0.08)] dark:shadow-[2px_2px_20px_rgba(0,0,0,0.3)] rounded-full flex group items-center hover:duration-300 duration-300">
+            <div className="flex items-center justify-center fill-black dark:fill-white">
               {loading ? (
-                <div className="animate-spin rounded-full h-[22px] w-[22px] border-2 border-black border-t-transparent"></div>
+                <div className="animate-spin rounded-full h-[22px] w-[22px] border-2 border-black dark:border-white border-t-transparent"></div>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" id="Isolation_Mode" data-name="Isolation Mode" viewBox="0 0 24 24" width={22} height={22}>
                   <path d="M18.9,16.776A10.539,10.539,0,1,0,16.776,18.9l5.1,5.1L24,21.88ZM10.5,18A7.5,7.5,0,1,1,18,10.5,7.507,7.507,0,0,1,10.5,18Z" />
@@ -796,7 +796,7 @@ const MapView = ({ user }) => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search hospitals, pharmacies, clinics..."
-              className="outline-none text-[16px] bg-transparent w-full text-black font-normal px-4 placeholder-gray-500"
+              className="outline-none text-[16px] bg-transparent w-full text-black dark:text-white font-normal px-4 placeholder-gray-500 dark:placeholder-gray-400"
               disabled={loading}
             />
           </div>
@@ -808,15 +808,15 @@ const MapView = ({ user }) => {
         <div className="relative">
           <button
             onClick={() => setShowLayerSelector(!showLayerSelector)}
-            className="bg-white p-3 rounded-lg shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500"
+            className="bg-white dark:bg-slate-950 p-3 rounded-lg shadow-lg hover:bg-gray-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <Layers className="h-5 w-5 text-gray-700" />
+            <Layers className="h-5 w-5 text-gray-700 dark:text-gray-300" />
           </button>
           
           {showLayerSelector && (
-            <div className="absolute right-0 bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200">
+            <div className="absolute right-0 bottom-full mb-2 w-48 bg-white dark:bg-slate-950 rounded-lg shadow-lg border border-gray-200 dark:border-gray-800">
               <div className="p-2">
-                <div className="text-sm font-medium text-gray-700 mb-2">Map Layers</div>
+                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Map Layers</div>
                 {Object.entries(mapLayers).map(([key, layer]) => (
                   <button
                     key={key}
@@ -826,8 +826,8 @@ const MapView = ({ user }) => {
                     }}
                     className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
                       currentLayer === key
-                        ? 'bg-primary-100 text-primary-700'
-                        : 'text-gray-700 hover:bg-gray-100'
+                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                   >
                     {layer.name}
@@ -841,30 +841,30 @@ const MapView = ({ user }) => {
 
       {/* Results Panel */}
       {searchResults.length > 0 && (
-        <div className="absolute bottom-4 left-20 w-80 max-h-96 bg-white rounded-lg shadow-lg border border-gray-200 z-[1000] overflow-hidden">
-          <div className="p-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Search Results</h3>
+        <div className="absolute bottom-4 left-20 w-80 max-h-96 bg-white dark:bg-slate-950 rounded-lg shadow-lg border border-gray-200 dark:border-gray-800 z-[1000] overflow-hidden">
+          <div className="p-4 border-b border-gray-200 dark:border-gray-800">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white">Search Results</h3>
           </div>
           <div className="overflow-y-auto max-h-80">
             {searchResults.map((result) => (
               <div
                 key={result.id}
-                className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${
-                  selectedMarker?.id === result.id ? 'bg-primary-50' : ''
+                className={`p-4 border-b border-gray-100 dark:border-gray-800 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 ${
+                  selectedMarker?.id === result.id ? 'bg-blue-50 dark:bg-blue-950' : ''
                 }`}
                 onClick={() => handleMarkerClick(result)}
               >
                 <div className="flex items-start space-x-3">
-                  <MapPin className="h-5 w-5 text-primary-600 mt-0.5 flex-shrink-0" />
+                  <MapPin className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium text-gray-900 truncate">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-white truncate">
                       {result.name}
                     </h4>
-                    <p className="text-sm text-gray-500 capitalize">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">
                       {result.type}
                     </p>
                     {result.address && (
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                         {result.address}
                       </p>
                     )}
@@ -899,7 +899,6 @@ const MapView = ({ user }) => {
           onMarkerClick={handleMarkerClick}
         />
 
-        {/* User location marker */}
         {userLocation && (
           <Marker position={[userLocation.lat, userLocation.lng]}>
             <Popup>
@@ -911,7 +910,6 @@ const MapView = ({ user }) => {
           </Marker>
         )}
 
-        {/* Search result markers */}
         {searchResults.map((result) => (
           <Marker
             key={result.id}
@@ -937,7 +935,7 @@ const MapView = ({ user }) => {
                     href={result.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-primary-600 hover:text-primary-800 mt-1 block"
+                    className="text-xs text-blue-600 hover:text-blue-800 mt-1 block"
                   >
                     Visit Website
                   </a>
@@ -956,10 +954,10 @@ const MapView = ({ user }) => {
               mapRef.current.zoomIn();
             }
           }}
-          className="bg-white p-3 rounded-lg shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
+          className="bg-white dark:bg-slate-950 p-3 rounded-lg shadow-lg hover:bg-gray-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
           title="Zoom In"
         >
-          <Plus className="h-5 w-5 text-gray-700" />
+          <Plus className="h-5 w-5 text-gray-700 dark:text-gray-300" />
         </button>
         <button
           onClick={() => {
@@ -967,10 +965,10 @@ const MapView = ({ user }) => {
               mapRef.current.zoomOut();
             }
           }}
-          className="bg-white p-3 rounded-lg shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
+          className="bg-white dark:bg-slate-950 p-3 rounded-lg shadow-lg hover:bg-gray-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
           title="Zoom Out"
         >
-          <Minus className="h-5 w-5 text-gray-700" />
+          <Minus className="h-5 w-5 text-gray-700 dark:text-gray-300" />
         </button>
       </div>
     </div>

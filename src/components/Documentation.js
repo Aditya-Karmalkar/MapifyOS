@@ -60,54 +60,54 @@ mapInstance.on("layerChange", (data) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-              <Book className="h-8 w-8 mr-3 text-blue-600" />
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+              <Book className="h-8 w-8 mr-3 text-blue-600 dark:text-blue-400" />
               SDK Documentation
             </h1>
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-gray-600 dark:text-gray-300">
               Learn how to integrate Mapify OS into your applications
             </p>
           </div>
 
           {/* Quick Start */}
-          <div className="bg-white shadow rounded-lg mb-8">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                <Zap className="h-5 w-5 mr-2 text-yellow-500" />
+          <div className="bg-white dark:bg-slate-950 shadow rounded-lg mb-8">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+                <Zap className="h-5 w-5 mr-2 text-yellow-500 dark:text-yellow-400" />
                 Quick Start
               </h2>
             </div>
             <div className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                 <div className="text-center">
-                  <div className="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                    <span className="text-blue-600 font-bold">1</span>
+                  <div className="bg-blue-100 dark:bg-blue-900 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                    <span className="text-blue-600 dark:text-blue-300 font-bold">1</span>
                   </div>
-                  <h3 className="font-medium text-gray-900 mb-2">Get API Key</h3>
-                  <p className="text-sm text-gray-600">Generate your API key from the dashboard</p>
+                  <h3 className="font-medium text-gray-900 dark:text-white mb-2">Get API Key</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Generate your API key from the dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                    <span className="text-green-600 font-bold">2</span>
+                  <div className="bg-green-100 dark:bg-green-900 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                    <span className="text-green-600 dark:text-green-300 font-bold">2</span>
                   </div>
-                  <h3 className="font-medium text-gray-900 mb-2">Include SDK</h3>
-                  <p className="text-sm text-gray-600">Add Leaflet and Mapify OS scripts</p>
+                  <h3 className="font-medium text-gray-900 dark:text-white mb-2">Include SDK</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Add Leaflet and Mapify OS scripts</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-purple-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                    <span className="text-purple-600 font-bold">3</span>
+                  <div className="bg-purple-100 dark:bg-purple-900 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                    <span className="text-purple-600 dark:text-purple-300 font-bold">3</span>
                   </div>
-                  <h3 className="font-medium text-gray-900 mb-2">Initialize</h3>
-                  <p className="text-sm text-gray-600">Create your map with one function call</p>
+                  <h3 className="font-medium text-gray-900 dark:text-white mb-2">Initialize</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Create your map with one function call</p>
                 </div>
               </div>
 
-              <div className="bg-gray-900 rounded-lg p-4 relative">
+              <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-4 relative">
                 <button
                   onClick={() => copyToClipboard(codeExamples.basic, 'basic')}
                   className="absolute top-4 right-4 text-gray-400 hover:text-white"
@@ -127,12 +127,12 @@ mapInstance.on("layerChange", (data) => {
 
           {/* Features */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white shadow rounded-lg">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">🗺️ Interactive Maps</h3>
+            <div className="bg-white dark:bg-slate-950 shadow rounded-lg">
+              <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white">🗺️ Interactive Maps</h3>
               </div>
               <div className="p-6">
-                <ul className="space-y-2 text-sm text-gray-600">
+                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <li>• Multiple map layers (Plain, Terrain, Satellite, Dark)</li>
                   <li>• Click anywhere for place details</li>
                   <li>• Responsive design for all devices</li>
@@ -141,12 +141,12 @@ mapInstance.on("layerChange", (data) => {
               </div>
             </div>
 
-            <div className="bg-white shadow rounded-lg">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">🔍 Search & Discovery</h3>
+            <div className="bg-white dark:bg-slate-950 shadow rounded-lg">
+              <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white">🔍 Search & Discovery</h3>
               </div>
               <div className="p-6">
-                <ul className="space-y-2 text-sm text-gray-600">
+                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <li>• Search for hospitals, restaurants, and more</li>
                   <li>• Customizable search radius</li>
                   <li>• Real-time results with markers</li>
@@ -157,10 +157,10 @@ mapInstance.on("layerChange", (data) => {
           </div>
 
           {/* API Reference */}
-          <div className="bg-white shadow rounded-lg mb-8">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                <Code className="h-5 w-5 mr-2 text-green-500" />
+          <div className="bg-white dark:bg-slate-950 shadow rounded-lg mb-8">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+                <Code className="h-5 w-5 mr-2 text-green-500 dark:text-green-400" />
                 API Reference
               </h2>
             </div>
@@ -168,21 +168,36 @@ mapInstance.on("layerChange", (data) => {
               <div className="space-y-6">
                 {/* MapifyOS.init */}
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-3">MapifyOS.init(containerId, options)</h3>
-                  <p className="text-gray-600 mb-4">Initialize a new map instance in the specified container.</p>
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">MapifyOS.init(containerId, options)</h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">Initialize a new map instance in the specified container.</p>
                   
-                  <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                    <h4 className="font-medium text-gray-900 mb-2">Parameters:</h4>
+                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 mb-4">
+                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Parameters:</h4>
                     <div className="space-y-2 text-sm">
-                      <div><code className="bg-gray-200 px-2 py-1 rounded">containerId</code> <span className="text-gray-600">(string) - DOM element ID</span></div>
-                      <div><code className="bg-gray-200 px-2 py-1 rounded">options.apiKey</code> <span className="text-gray-600">(string, required) - Your API key</span></div>
-                      <div><code className="bg-gray-200 px-2 py-1 rounded">options.center</code> <span className="text-gray-600">(array, optional) - Initial center [lat, lng]</span></div>
-                      <div><code className="bg-gray-200 px-2 py-1 rounded">options.zoom</code> <span className="text-gray-600">(number, optional) - Initial zoom level</span></div>
-                      <div><code className="bg-gray-200 px-2 py-1 rounded">options.layer</code> <span className="text-gray-600">(string, optional) - Map layer type</span></div>
+                      <div>
+                        <code className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-2 py-1 rounded">containerId</code>
+                        <span className="text-gray-600 dark:text-gray-300"> (string) - DOM element ID</span>
+                      </div>
+                      <div>
+                        <code className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-2 py-1 rounded">options.apiKey</code>
+                        <span className="text-gray-600 dark:text-gray-300"> (string, required) - Your API key</span>
+                      </div>
+                      <div>
+                        <code className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-2 py-1 rounded">options.center</code>
+                        <span className="text-gray-600 dark:text-gray-300"> (array, optional) - Initial center [lat, lng]</span>
+                      </div>
+                      <div>
+                        <code className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-2 py-1 rounded">options.zoom</code>
+                        <span className="text-gray-600 dark:text-gray-300"> (number, optional) - Initial zoom level</span>
+                      </div>
+                      <div>
+                        <code className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-2 py-1 rounded">options.layer</code>
+                        <span className="text-gray-600 dark:text-gray-300"> (string, optional) - Map layer type</span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="bg-gray-900 rounded-lg p-4 relative">
+                  <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-4 relative">
                     <button
                       onClick={() => copyToClipboard(codeExamples.search, 'search')}
                       className="absolute top-4 right-4 text-gray-400 hover:text-white"
@@ -200,10 +215,10 @@ mapInstance.on("layerChange", (data) => {
 
                 {/* Event Handling */}
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-3">Event Handling</h3>
-                  <p className="text-gray-600 mb-4">Listen to map events for custom functionality.</p>
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">Event Handling</h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">Listen to map events for custom functionality.</p>
                   
-                  <div className="bg-gray-900 rounded-lg p-4 relative">
+                  <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-4 relative">
                     <button
                       onClick={() => copyToClipboard(codeExamples.events, 'events')}
                       className="absolute top-4 right-4 text-gray-400 hover:text-white"
@@ -223,18 +238,18 @@ mapInstance.on("layerChange", (data) => {
           </div>
 
           {/* Security & Best Practices */}
-          <div className="bg-white shadow rounded-lg mb-8">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                <Shield className="h-5 w-5 mr-2 text-red-500" />
+          <div className="bg-white dark:bg-slate-950 shadow rounded-lg mb-8">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+                <Shield className="h-5 w-5 mr-2 text-red-500 dark:text-red-400" />
                 Security & Best Practices
               </h2>
             </div>
             <div className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-medium text-gray-900 mb-3">🔐 API Key Security</h3>
-                  <ul className="space-y-2 text-sm text-gray-600">
+                  <h3 className="font-medium text-gray-900 dark:text-white mb-3">🔐 API Key Security</h3>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                     <li>• Never expose API keys in client-side code for production</li>
                     <li>• Use environment variables for sensitive data</li>
                     <li>• Regularly rotate your API keys</li>
@@ -242,8 +257,8 @@ mapInstance.on("layerChange", (data) => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-medium text-gray-900 mb-3">⚡ Performance Tips</h3>
-                  <ul className="space-y-2 text-sm text-gray-600">
+                  <h3 className="font-medium text-gray-900 dark:text-white mb-3">⚡ Performance Tips</h3>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                     <li>• Initialize maps only when needed</li>
                     <li>• Limit search radius for better performance</li>
                     <li>• Use appropriate zoom levels</li>
@@ -255,37 +270,37 @@ mapInstance.on("layerChange", (data) => {
           </div>
 
           {/* Examples & Resources */}
-          <div className="bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">📚 Examples & Resources</h2>
+          <div className="bg-white dark:bg-slate-950 shadow rounded-lg">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">📚 Examples & Resources</h2>
             </div>
             <div className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <a
                   href="/sdk/examples/basic.html"
                   target="_blank"
-                  className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                  className="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-medium text-gray-900">Basic Example</h3>
-                      <p className="text-sm text-gray-600 mt-1">Simple map initialization</p>
+                      <h3 className="font-medium text-gray-900 dark:text-white">Basic Example</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Simple map initialization</p>
                     </div>
-                    <ExternalLink className="h-4 w-4 text-gray-400" />
+                    <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                   </div>
                 </a>
 
                 <a
                   href="/sdk/examples/search.html"
                   target="_blank"
-                  className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                  className="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-medium text-gray-900">Search Example</h3>
-                      <p className="text-sm text-gray-600 mt-1">Search functionality demo</p>
+                      <h3 className="font-medium text-gray-900 dark:text-white">Search Example</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Search functionality demo</p>
                     </div>
-                    <ExternalLink className="h-4 w-4 text-gray-400" />
+                    <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                   </div>
                 </a>
 
@@ -293,14 +308,14 @@ mapInstance.on("layerChange", (data) => {
                   href="https://github.com/mapifyos/sdk"
                   target="_blank"
                   rel="noreferrer"
-                  className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                  className="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-medium text-gray-900">GitHub Repository</h3>
-                      <p className="text-sm text-gray-600 mt-1">Source code and issues</p>
+                      <h3 className="font-medium text-gray-900 dark:text-white">GitHub Repository</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Source code and issues</p>
                     </div>
-                    <ExternalLink className="h-4 w-4 text-gray-400" />
+                    <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                   </div>
                 </a>
               </div>

@@ -34,7 +34,7 @@ const AppContent = () => {
   }
 
   return (
-    <div className="App">
+    <div className="bg-gray-50 dark:bg-[#0B0F1A] text-black dark:text-white min-h-screen">
       {user && location.pathname !== '/map' && <Navbar user={user} />}
       <Routes>
         <Route 
