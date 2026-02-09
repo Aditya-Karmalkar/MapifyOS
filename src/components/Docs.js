@@ -254,22 +254,25 @@ npm install @mapifyos/angular`;
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
+      <div className="bg-white dark:bg-slate-950 shadow-sm border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
-              <Globe className="h-8 w-8 text-primary-600" />
+              <Globe className="h-8 w-8 text-blue-600" />
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Mapify OS Documentation</h1>
-                <p className="text-sm text-gray-600">Integrate maps into your applications with ease</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Mapify OS Documentation
+                </h1>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  Integrate maps into your applications with ease
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
               <a
                 href="/dashboard"
-                className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors"
+                className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
               >
                 <Key className="h-4 w-4" />
                 <span>Get API Key</span>
@@ -281,10 +284,11 @@ npm install @mapifyos/angular`;
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Navigation */}
           <div className="lg:w-64 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm p-4">
-              <h3 className="font-medium text-gray-900 mb-4">Documentation</h3>
+            <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm p-4">
+              <h3 className="font-medium text-gray-900 dark:text-white mb-4">
+                Documentation
+              </h3>
               <nav className="space-y-2">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
@@ -294,8 +298,8 @@ npm install @mapifyos/angular`;
                       onClick={() => setActiveTab(tab.id)}
                       className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-sm transition-colors ${
                         activeTab === tab.id
-                          ? 'bg-primary-100 text-primary-700'
-                          : 'text-gray-600 hover:bg-gray-100'
+                          ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                          : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                       }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -307,25 +311,28 @@ npm install @mapifyos/angular`;
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="flex-1">
             {activeTab === 'quickstart' && (
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">Quick Start Guide</h2>
-                  <p className="text-lg text-gray-600 mb-8">
-                    Get started with Mapify OS in minutes. Add interactive maps to your website with just a few lines of code.
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                    Quick Start Guide
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                    Get started with Mapify OS in minutes.
                   </p>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">1. Get Your API Key</h3>
-                  <p className="text-gray-600 mb-4">
-                    First, you'll need an API key. Sign up and generate one from your dashboard.
+                <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    1. Get Your API Key
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    First, you'll need an API key.
                   </p>
                   <a
                     href="/dashboard"
-                    className="inline-flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors"
+                    className="inline-flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                   >
                     <Key className="h-4 w-4" />
                     <span>Generate API Key</span>
@@ -333,8 +340,10 @@ npm install @mapifyos/angular`;
                   </a>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">2. Installation</h3>
+                <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    2. Installation
+                  </h3>
                   <CodeBlock
                     code={installationCode}
                     language="bash"
@@ -343,11 +352,10 @@ npm install @mapifyos/angular`;
                   />
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">3. Basic HTML Example</h3>
-                  <p className="text-gray-600 mb-4">
-                    Here's a complete HTML example to get you started:
-                  </p>
+                <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    3. Basic HTML Example
+                  </h3>
                   <CodeBlock
                     code={quickStartCode}
                     language="html"
@@ -356,11 +364,12 @@ npm install @mapifyos/angular`;
                   />
                 </div>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                  <h4 className="font-medium text-blue-900 mb-2">🎉 That's it!</h4>
-                  <p className="text-blue-800">
-                    You now have a fully functional map with search capabilities, place information, and multiple map layers.
-                    Replace <code className="bg-blue-100 px-1 rounded">YOUR_API_KEY_HERE</code> with your actual API key.
+                <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-900 rounded-lg p-6">
+                  <h4 className="font-medium text-blue-900 dark:text-blue-300 mb-2">
+                    🎉 That's it!
+                  </h4>
+                  <p className="text-blue-800 dark:text-blue-200">
+                    You now have a fully functional map!
                   </p>
                 </div>
               </div>
@@ -369,14 +378,18 @@ npm install @mapifyos/angular`;
             {activeTab === 'react' && (
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">React Integration</h2>
-                  <p className="text-lg text-gray-600 mb-8">
-                    Use Mapify OS in your React applications with our dedicated React package.
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                    React Integration
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                    Use Mapify OS in your React applications.
                   </p>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Installation</h3>
+                <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    Installation
+                  </h3>
                   <CodeBlock
                     code="npm install @mapifyos/react"
                     language="bash"
@@ -385,8 +398,10 @@ npm install @mapifyos/angular`;
                   />
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">React Component Example</h3>
+                <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    React Component Example
+                  </h3>
                   <CodeBlock
                     code={reactCode}
                     language="javascript"
@@ -394,30 +409,24 @@ npm install @mapifyos/angular`;
                     title="MyMapComponent.jsx"
                   />
                 </div>
-
-                <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-                  <h4 className="font-medium text-green-900 mb-2">✨ Features Included</h4>
-                  <ul className="text-green-800 space-y-1">
-                    <li>• Automatic cleanup on component unmount</li>
-                    <li>• TypeScript support</li>
-                    <li>• React hooks integration</li>
-                    <li>• Server-side rendering compatible</li>
-                  </ul>
-                </div>
               </div>
             )}
 
             {activeTab === 'vue' && (
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">Vue.js Integration</h2>
-                  <p className="text-lg text-gray-600 mb-8">
-                    Integrate Mapify OS seamlessly into your Vue.js applications.
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                    Vue.js Integration
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                    Integrate Mapify OS into your Vue.js applications.
                   </p>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Installation</h3>
+                <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    Installation
+                  </h3>
                   <CodeBlock
                     code="npm install @mapifyos/vue"
                     language="bash"
@@ -426,8 +435,10 @@ npm install @mapifyos/angular`;
                   />
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Vue Component Example</h3>
+                <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    Vue Component Example
+                  </h3>
                   <CodeBlock
                     code={vueCode}
                     language="javascript"
@@ -441,14 +452,18 @@ npm install @mapifyos/angular`;
             {activeTab === 'api' && (
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">API Reference</h2>
-                  <p className="text-lg text-gray-600 mb-8">
-                    Complete API documentation with examples for all available methods and events.
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                    API Reference
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                    Complete API documentation.
                   </p>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Core Methods</h3>
+                <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    Core Methods
+                  </h3>
                   <CodeBlock
                     code={apiExamples}
                     language="javascript"
@@ -456,88 +471,38 @@ npm install @mapifyos/angular`;
                     title="API Examples"
                   />
                 </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h4 className="font-semibold text-gray-900 mb-3">Map Methods</h4>
-                    <ul className="space-y-2 text-sm text-gray-600">
-                      <li><code>setCenter(lat, lng)</code> - Set map center</li>
-                      <li><code>setZoom(level)</code> - Set zoom level</li>
-                      <li><code>flyTo(coords, zoom)</code> - Animate to location</li>
-                      <li><code>setStyle(style)</code> - Change map style</li>
-                      <li><code>getBounds()</code> - Get current map bounds</li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h4 className="font-semibold text-gray-900 mb-3">Marker Methods</h4>
-                    <ul className="space-y-2 text-sm text-gray-600">
-                      <li><code>addMarker(options)</code> - Add marker</li>
-                      <li><code>removeMarker(id)</code> - Remove marker</li>
-                      <li><code>clearMarkers()</code> - Clear all markers</li>
-                      <li><code>updateMarker(id, options)</code> - Update marker</li>
-                      <li><code>getMarkers()</code> - Get all markers</li>
-                    </ul>
-                  </div>
-                </div>
               </div>
             )}
 
             {activeTab === 'examples' && (
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">Live Examples</h2>
-                  <p className="text-lg text-gray-600 mb-8">
-                    Interactive examples showing different use cases and features.
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                    Live Examples
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                    Interactive examples showing different use cases.
                   </p>
                 </div>
 
-                <div className="grid gap-6">
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div className="p-6 border-b border-gray-200">
-                      <h3 className="text-lg font-semibold text-gray-900">Store Locator</h3>
-                      <p className="text-gray-600">Find nearby stores with search and filtering</p>
-                    </div>
-                    <div className="h-64 bg-gray-100 flex items-center justify-center">
-                      <div className="text-center">
-                        <Globe className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                        <p className="text-gray-500">Interactive demo would be here</p>
-                        <button className="mt-2 text-primary-600 hover:text-primary-700">
-                          View Code →
-                        </button>
-                      </div>
-                    </div>
+                <div className="bg-white dark:bg-slate-950 rounded-lg shadow-sm overflow-hidden">
+                  <div className="p-6 border-b border-gray-200 dark:border-gray-800">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      Store Locator
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      Find nearby stores with search
+                    </p>
                   </div>
-
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div className="p-6 border-b border-gray-200">
-                      <h3 className="text-lg font-semibold text-gray-900">Real-time Tracking</h3>
-                      <p className="text-gray-600">Track vehicles or deliveries in real-time</p>
-                    </div>
-                    <div className="h-64 bg-gray-100 flex items-center justify-center">
-                      <div className="text-center">
-                        <Globe className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                        <p className="text-gray-500">Interactive demo would be here</p>
-                        <button className="mt-2 text-primary-600 hover:text-primary-700">
-                          View Code →
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div className="p-6 border-b border-gray-200">
-                      <h3 className="text-lg font-semibold text-gray-900">Property Listings</h3>
-                      <p className="text-gray-600">Display properties with detailed popups</p>
-                    </div>
-                    <div className="h-64 bg-gray-100 flex items-center justify-center">
-                      <div className="text-center">
-                        <Globe className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                        <p className="text-gray-500">Interactive demo would be here</p>
-                        <button className="mt-2 text-primary-600 hover:text-primary-700">
-                          View Code →
-                        </button>
-                      </div>
+                  <div className="h-64 bg-gray-100 dark:bg-slate-900 flex items-center justify-center">
+                    <div className="text-center">
+                      <Globe className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-2" />
+                      <p className="text-gray-500 dark:text-gray-400">
+                        Interactive demo
+                      </p>
+                      <button className="mt-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
+                        View Code →
+                      </button>
                     </div>
                   </div>
                 </div>
