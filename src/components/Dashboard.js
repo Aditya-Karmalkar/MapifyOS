@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { collection, query, onSnapshot, addDoc, doc, deleteDoc } from 'firebase/firestore';
-import { db } from '../firebase';
-import { v4 as uuidv4 } from 'uuid';
+import { collection, query, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
+import { db, auth } from '../firebase';
 import { Key, Plus, Trash2, Copy, Eye, EyeOff, Map, ExternalLink, Activity } from 'lucide-react';
 
 const Dashboard = ({ user }) => {
@@ -46,21 +45,34 @@ const Dashboard = ({ user }) => {
     fetchApiKeys();
   }, [user.uid]);
 
+  // S-01/A-02: Use backend Cloud Function instead of client-side key generation
   const generateApiKey = async () => {
     setGenerating(true);
     try {
-      const newKey = uuidv4();
-      const keysRef = collection(db, 'apiKeys', user.uid, 'keys');
+      // Get Firebase ID token for authentication
+      const idToken = await auth.currentUser.getIdToken();
       
-      await addDoc(keysRef, {
-        key: newKey,
-        active: true,
-        createdAt: new Date().toISOString(),
-        usageCount: 0,
-        name: `API Key ${apiKeys.length + 1}`
+      // Call the secure backend generateKey endpoint
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || '';
+      const response = await fetch(`${apiBaseUrl}/generateKey`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: `API Key ${apiKeys.length + 1}` })
       });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to generate API key');
+      }
+      
+      // The real-time Firestore listener will automatically pick up the new key
+      // No need to manually update state here
     } catch (error) {
       console.error('Error generating API key:', error);
+      alert(`❌ Error generating API key: ${error.message}`);
     }
     setGenerating(false);
   };
