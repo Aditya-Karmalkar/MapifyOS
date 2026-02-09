@@ -1,14 +1,39 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Users can read/write their own user document
+    
+    // ============================================
+    // SECURITY: User Document Rules (S-03)
+    // ============================================
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Anyone can read their own document
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Only allow create with required fields, set by server/client on first auth
+      allow create: if request.auth != null && request.auth.uid == userId
+        && request.resource.data.keys().hasAll(['email', 'createdAt'])
+        && request.resource.data.email is string
+        && request.resource.data.createdAt is string;
+      
+      // Only allow updating displayName - prevent modification of email/createdAt
+      allow update: if request.auth != null && request.auth.uid == userId
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['email', 'createdAt']));
     }
     
-    // Users can read/write their own API keys
+    // ============================================
+    // API Keys - Read only from client, write via Cloud Functions
+    // ============================================
     match /apiKeys/{userId}/keys/{keyId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Users can read their own keys
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // SECURITY: Disallow direct client writes - keys should be generated via Cloud Function
+      // This prevents clients from creating keys with arbitrary properties
+      allow create: if false;
+      allow update: if false;
+      
+      // Allow delete so users can remove their own keys
+      allow delete: if request.auth != null && request.auth.uid == userId;
     }
   }
 }

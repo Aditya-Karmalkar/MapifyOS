@@ -5,6 +5,71 @@ const axios = require('axios');
 
 admin.initializeApp();
 
+// ============================================
+// SECURITY: Input Validation Constants (S-02)
+// ============================================
+
+// Allowed POI types for search queries (prevents OQL injection)
+const ALLOWED_POI_TYPES = new Set([
+  'hospital', 'pharmacy', 'clinic', 'restaurant', 'fuel',
+  'bank', 'school', 'police', 'fire_station', 'atm', 'hotel',
+  'cafe', 'fast_food', 'parking', 'bus_station', 'library'
+]);
+
+// Radius limits (in meters)
+const MIN_RADIUS = 100;
+const MAX_RADIUS = 10000;
+
+/**
+ * Validates and sanitizes search parameters
+ * @returns {Object} { valid: boolean, error?: string, sanitized?: object }
+ */
+function validateSearchParams(lat, lon, type, radius) {
+  // Validate coordinates
+  const parsedLat = parseFloat(lat);
+  const parsedLon = parseFloat(lon);
+  
+  if (isNaN(parsedLat) || isNaN(parsedLon)) {
+    return { valid: false, error: 'Invalid coordinates' };
+  }
+  
+  if (parsedLat < -90 || parsedLat > 90) {
+    return { valid: false, error: 'Latitude must be between -90 and 90' };
+  }
+  
+  if (parsedLon < -180 || parsedLon > 180) {
+    return { valid: false, error: 'Longitude must be between -180 and 180' };
+  }
+  
+  // Validate and sanitize POI type (strict allowlist)
+  const sanitizedType = String(type).toLowerCase().trim();
+  if (!ALLOWED_POI_TYPES.has(sanitizedType)) {
+    return { 
+      valid: false, 
+      error: `Invalid POI type. Allowed types: ${[...ALLOWED_POI_TYPES].join(', ')}` 
+    };
+  }
+  
+  // Validate radius
+  const parsedRadius = parseInt(radius, 10);
+  if (isNaN(parsedRadius) || parsedRadius < MIN_RADIUS || parsedRadius > MAX_RADIUS) {
+    return { 
+      valid: false, 
+      error: `Radius must be a number between ${MIN_RADIUS} and ${MAX_RADIUS} meters` 
+    };
+  }
+  
+  return {
+    valid: true,
+    sanitized: {
+      lat: parsedLat,
+      lon: parsedLon,
+      type: sanitizedType,
+      radius: parsedRadius
+    }
+  };
+}
+
 // API Key Verification Endpoint for SDK
 exports.verify = functions.https.onRequest(async (req, res) => {
   cors(req, res, async () => {
@@ -162,22 +227,24 @@ exports.search = functions.https.onRequest(async (req, res) => {
       }
 
       const keyDoc = keysSnapshot.docs[0];
-      const keyData = keyDoc.data();
 
-      // Get search parameters
+      // Get and validate search parameters (S-02: OQL Injection Prevention)
       const { lat, lon, type = 'hospital', radius = 3000 } = req.query;
-
-      if (!lat || !lon) {
-        return res.status(400).json({ error: 'Latitude and longitude are required' });
+      
+      const validation = validateSearchParams(lat, lon, type, radius);
+      if (!validation.valid) {
+        return res.status(400).json({ error: validation.error });
       }
+      
+      const { lat: safeLat, lon: safeLon, type: safeType, radius: safeRadius } = validation.sanitized;
 
-      // Build Overpass query
+      // Build Overpass query with sanitized inputs
       const overpassQuery = `
         [out:json][timeout:25];
         (
-          node["amenity"="${type}"](around:${radius},${lat},${lon});
-          way["amenity"="${type}"](around:${radius},${lat},${lon});
-          relation["amenity"="${type}"](around:${radius},${lat},${lon});
+          node["amenity"="${safeType}"](around:${safeRadius},${safeLat},${safeLon});
+          way["amenity"="${safeType}"](around:${safeRadius},${safeLat},${safeLon});
+          relation["amenity"="${safeType}"](around:${safeRadius},${safeLat},${safeLon});
         );
         out center;
       `;
@@ -199,8 +266,8 @@ exports.search = functions.https.onRequest(async (req, res) => {
         .filter(element => element.lat && element.lon)
         .map(element => ({
           id: element.id,
-          name: element.tags?.name || `${type.charAt(0).toUpperCase() + type.slice(1)}`,
-          type: element.tags?.amenity || type,
+          name: element.tags?.name || `${safeType.charAt(0).toUpperCase() + safeType.slice(1)}`,
+          type: element.tags?.amenity || safeType,
           lat: element.lat || element.center?.lat,
           lng: element.lon || element.center?.lon,
           address: element.tags?.['addr:full'] || element.tags?.['addr:street'] || '',
