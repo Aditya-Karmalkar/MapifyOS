@@ -9,7 +9,8 @@ import Docs from './components/Docs';
 import Documentation from './components/Documentation';
 import TermsOfUse from './components/TermsOfUse';
 import PrivacyPolicy from './components/PrivacyPolicy';
-import Navbar from './components/Navbar';
+import Layout from './components/Layout';
+import { ThemeProvider } from './context/ThemeContext';
 
 const AppContent = () => {
   const [user, setUser] = useState(null);
@@ -35,41 +36,42 @@ const AppContent = () => {
 
   return (
     <div className="App">
-      {user && location.pathname !== '/map' && <Navbar user={user} />}
-      <Routes>
-        <Route 
-          path="/login" 
-          element={!user ? <Login /> : <Navigate to="/dashboard" />} 
-        />
-        <Route 
-          path="/dashboard" 
-          element={user ? <Dashboard user={user} /> : <Navigate to="/login" />} 
-        />
-        <Route 
-          path="/map" 
-          element={user ? <MapView user={user} /> : <Navigate to="/login" />} 
-        />
-        <Route 
-          path="/docs" 
-          element={<Docs />} 
-        />
-        <Route 
-          path="/documentation" 
-          element={<Documentation />} 
-        />
-        <Route 
-          path="/terms" 
-          element={<TermsOfUse />} 
-        />
-        <Route 
-          path="/privacy" 
-          element={<PrivacyPolicy />} 
-        />
-        <Route 
-          path="/" 
-          element={user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} 
-        />
-      </Routes>
+      <Layout user={user}>
+        <Routes>
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to="/dashboard" />}
+          />
+          <Route
+            path="/dashboard"
+            element={user ? <Dashboard user={user} /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/map"
+            element={user ? <MapView user={user} /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/docs"
+            element={<Docs />}
+          />
+          <Route
+            path="/documentation"
+            element={<Documentation />}
+          />
+          <Route
+            path="/terms"
+            element={<TermsOfUse />}
+          />
+          <Route
+            path="/privacy"
+            element={<PrivacyPolicy />}
+          />
+          <Route
+            path="/"
+            element={user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />}
+          />
+        </Routes>
+      </Layout>
     </div>
   );
 };
@@ -77,7 +79,9 @@ const AppContent = () => {
 function App() {
   return (
     <Router>
-      <AppContent />
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
     </Router>
   );
 }
