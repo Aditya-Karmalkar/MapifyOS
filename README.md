@@ -7,6 +7,8 @@ The open, customizable alternative to Google Maps with built-in authentication, 
 [![GitHub SDK](https://img.shields.io/badge/SDK-GitHub-black?style=for-the-badge)](https://github.com/Aditya-Karmalkar/sdk)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
+**Commit on OSCG Branch.**
+
 ## 🎯 Overview
 
 Mapify OS is a complete, production-ready web application that serves as an open-source alternative to Google Maps. It provides both a user-facing map interface and a comprehensive developer ecosystem for integrating location services into third-party applications.
@@ -14,36 +16,42 @@ Mapify OS is a complete, production-ready web application that serves as an open
 ## ✨ Features
 
 ### 🗺️ **Interactive Maps**
+
 - Multiple map layers (Plain, Terrain, Satellite, Dark)
 - Real-time location detection and tracking
 - Responsive design for desktop and mobile
 - Smooth pan and zoom interactions
 
 ### 🔍 **Smart Search System**
+
 - Natural language queries ("hospitals near me")
 - Multiple POI types (hospitals, pharmacies, clinics, restaurants, etc.)
 - 3km radius search with real-time results
 - Visual markers with detailed information popups
 
 ### 🔐 **Secure Authentication**
+
 - Firebase Authentication integration
 - Email/password and Google sign-in support
 - Protected routes and session management
 - User registration and login flows
 
 ### 🔑 **API Key Management**
+
 - Generate unlimited API keys with custom names
 - Real-time usage tracking and statistics
 - Key activation/deactivation controls
 - Secure key storage in Firestore
 
 ### 🌐 **Developer API & SDK**
+
 - RESTful API endpoints for location services
 - JavaScript SDK for easy integration
 - CORS-enabled for cross-origin requests
 - Comprehensive error handling and validation
 
 ### 📊 **Performance Optimized**
+
 - <3s map load times
 - <2s search response times
 - Lazy loading of components
@@ -52,16 +60,19 @@ Mapify OS is a complete, production-ready web application that serves as an open
 ## 📸 Screenshots
 
 ### 🗺️ Interactive Map Interface
+
 ![Map Interface](public/Mapss.png)
 *Multi-layer map with search functionality, location markers, and responsive design*
 
 ### 📊 Developer Dashboard
+
 ![Dashboard](public/Dashboard.png)
 *API key management, usage statistics, and developer tools*
 
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **React 18** - Modern UI framework with hooks
 - **Leaflet** - Interactive map library
 - **Tailwind CSS** - Utility-first CSS framework
@@ -69,6 +80,7 @@ Mapify OS is a complete, production-ready web application that serves as an open
 - **React Router** - Client-side routing
 
 ### Backend & Infrastructure
+
 - **Firebase Authentication** - Secure user management
 - **Firebase Firestore** - NoSQL document database
 - **Firebase Cloud Functions** - Serverless backend API
@@ -76,6 +88,7 @@ Mapify OS is a complete, production-ready web application that serves as an open
 - **Node.js 18** - Runtime environment
 
 ### Maps & Data Sources
+
 - **OpenStreetMap** - Standard map tiles
 - **OpenTopoMap** - Terrain and elevation data
 - **Esri World Imagery** - Satellite imagery
@@ -84,6 +97,7 @@ Mapify OS is a complete, production-ready web application that serves as an open
 - **Overpass API** - Real-time POI data
 
 ### Development & Deployment
+
 - **pnpm** - Fast package manager
 - **Firebase CLI** - Deployment tools
 - **Rollup** - SDK bundling
@@ -100,6 +114,7 @@ Mapify OS is a complete, production-ready web application that serves as an open
 ### Setup
 
 1. **Clone and install dependencies**
+
    ```bash
    git clone <repository-url>
    cd mapify-os
@@ -110,19 +125,25 @@ Mapify OS is a complete, production-ready web application that serves as an open
    ```
 
 2. **Firebase Configuration**
-   
+
    Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   
-   Update `src/firebase.js` with your Firebase config:
-   ```javascript
-   const firebaseConfig = {
-     apiKey: "your-api-key",
-     authDomain: "your-project.firebaseapp.com",
-     projectId: "your-project-id",
-     storageBucket: "your-project.appspot.com",
-     messagingSenderId: "123456789",
-     appId: "your-app-id"
-   };
+
+   Create a `.env` file in the root directory (copy from `.env.example`):
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Update `.env` with your Firebase config keys:
+
+   ```env
+   REACT_APP_FIREBASE_API_KEY=your-api-key
+   REACT_APP_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+   REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+   REACT_APP_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+   REACT_APP_FIREBASE_APP_ID=your-app-id
+   REACT_APP_FIREBASE_MEASUREMENT_ID=your-measurement-id
    ```
 
 3. **Enable Firebase Services**
@@ -132,12 +153,14 @@ Mapify OS is a complete, production-ready web application that serves as an open
    - Hosting
 
 4. **Initialize Firebase**
+
    ```bash
    firebase login
    firebase init
    ```
 
 5. **Deploy Firestore Rules**
+
    ```bash
    firebase deploy --only firestore:rules
    ```
@@ -145,11 +168,13 @@ Mapify OS is a complete, production-ready web application that serves as an open
 ### Development
 
 Start the development server:
+
 ```bash
 pnpm start
 ```
 
 Start Firebase emulators (optional):
+
 ```bash
 firebase emulators:start
 ```
@@ -157,11 +182,13 @@ firebase emulators:start
 ### Deployment
 
 1. **Build the project**
+
    ```bash
    pnpm run build
    ```
 
 2. **Deploy to Firebase**
+
    ```bash
    firebase deploy
    ```
@@ -249,20 +276,24 @@ All API requests require an API key in the `x-api-key` header.
 ### Endpoints
 
 #### Search for POIs
-```
+
+```http
 GET /search?lat={latitude}&lon={longitude}&type={poi_type}
 ```
 
 **Parameters:**
+
 - `lat` (required): Latitude coordinate
 - `lon` (required): Longitude coordinate  
 - `type` (optional): POI type (hospital, pharmacy, clinic, restaurant, etc.)
 - `radius` (optional): Search radius in meters (default: 3000)
 
 **Headers:**
+
 - `x-api-key`: Your API key
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -334,7 +365,7 @@ graph TB
 
 ### Database Schema
 
-```
+```text
 users/{uid}
 ├── email: string
 ├── createdAt: timestamp
@@ -351,7 +382,7 @@ apiKeys/{uid}/keys/{keyId}
 
 ## 📁 Project Structure
 
-```
+```text
 mapify-os/
 ├── public/                 # Static assets & PWA manifest
 ├── src/
@@ -399,35 +430,50 @@ We welcome contributions! Here's how to get started:
 
 ### Development Workflow
 
-1. **Fork & Clone**
-   ```bash
-   git clone https://github.com/your-username/mapify-os.git
-   cd mapify-os
+### Installation
+
+1. Clone the repository
+
+   ```sh
+   git clone https://github.com/Aditya-Karmalkar/MapifyOS.git
    ```
 
-2. **Install Dependencies**
-   ```bash
+2. Install dependencies
+
+   ```sh
    pnpm install
    cd functions && pnpm install && cd ..
    ```
 
-3. **Start Development**
+3. Configure Environment Variables
+   - Create a `.env` file in the root directory.
+   - Copy the contents from `.env.example` and fill in your Firebase credentials.
+
+   ```bash
+   REACT_APP_FIREBASE_API_KEY=your_api_key
+   REACT_APP_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+   ...
+   ```
+
+4. **Start Development**
+
    ```bash
    pnpm start                    # Start React dev server
    firebase emulators:start      # Start Firebase emulators
    ```
 
-4. **Create Feature Branch**
+5. **Create Feature Branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
 
-5. **Make Changes & Test**
+6. **Make Changes & Test**
    - Write your code
    - Test locally with emulators
    - Ensure all existing tests pass
 
-6. **Submit Pull Request**
+7. **Submit Pull Request**
    - Push your branch
    - Create PR with detailed description
    - Wait for review and CI checks
@@ -473,11 +519,13 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 🗺️ Roadmap
 
 ### 🚧 In Progress
+
 - [ ] **Rate Limiting** - API usage limits and throttling
 - [ ] **Analytics Dashboard** - Usage statistics and insights
 - [ ] **Webhook Notifications** - Real-time API usage alerts
 
 ### 🎯 Planned Features
+
 - [ ] **Directions & Routing** - Turn-by-turn navigation with OSRM
 - [ ] **Offline Maps** - PWA support with cached tiles
 - [ ] **Custom Tile Hosting** - Self-hosted map tile server
@@ -486,6 +534,7 @@ This project is open source and available under the [MIT License](LICENSE).
 - [ ] **Geofencing** - Location-based triggers and alerts
 
 ### 🔮 Future Enhancements
+
 - [ ] **Real-time Collaboration** - Shared maps and annotations
 - [ ] **3D Maps** - Three.js integration for 3D visualization
 - [ ] **Machine Learning** - AI-powered location recommendations

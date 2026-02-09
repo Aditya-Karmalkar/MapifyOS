@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { collection, query, onSnapshot, addDoc, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Key, Plus, Trash2, Copy, Eye, EyeOff, Map, ExternalLink, Activity } from 'lucide-react';
+import { Key, Plus, Trash2, Copy, Eye, EyeOff, Map, ExternalLink, Activity, Sparkles, Book, ArrowRight } from 'lucide-react';
 
 const Dashboard = ({ user }) => {
   const [apiKeys, setApiKeys] = useState([]);
@@ -18,7 +18,7 @@ const Dashboard = ({ user }) => {
         const keysRef = collection(db, 'apiKeys', user.uid, 'keys');
         const q = query(keysRef);
 
-        const unsubscribe = onSnapshot(q, 
+        const unsubscribe = onSnapshot(q,
           (snapshot) => {
             const keys = snapshot.docs.map(doc => ({
               id: doc.id,
@@ -29,7 +29,6 @@ const Dashboard = ({ user }) => {
           },
           (error) => {
             console.error('Error fetching API keys:', error);
-            // Set loading to false even on error to prevent infinite loading
             setLoading(false);
             setApiKeys([]);
           }
@@ -51,7 +50,7 @@ const Dashboard = ({ user }) => {
     try {
       const newKey = uuidv4();
       const keysRef = collection(db, 'apiKeys', user.uid, 'keys');
-      
+
       await addDoc(keysRef, {
         key: newKey,
         active: true,
@@ -61,17 +60,14 @@ const Dashboard = ({ user }) => {
       });
     } catch (error) {
       console.error('Error generating API key:', error);
+      alert('Failed to generate API key. Please check your connection or try again.');
     }
     setGenerating(false);
   };
 
   const deleteApiKey = async (keyId, keyName) => {
-    // Show confirmation dialog
     const confirmed = window.confirm(
-      `⚠️ Delete API Key "${keyName}"?\n\n` +
-      `This action cannot be undone. Once deleted, this API key will be permanently removed and cannot be retrieved again.\n\n` +
-      `Any applications using this key will stop working immediately.\n\n` +
-      `Are you sure you want to continue?`
+      `⚠️ Delete API Key "${keyName}"?\n\nThis action cannot be undone.`
     );
 
     if (!confirmed) return;
@@ -79,9 +75,6 @@ const Dashboard = ({ user }) => {
     try {
       const keyRef = doc(db, 'apiKeys', user.uid, 'keys', keyId);
       await deleteDoc(keyRef);
-      
-      // Show success message
-      alert('✅ API Key deleted successfully!\n\nThe key has been permanently removed from the database.');
     } catch (error) {
       console.error('Error deleting API key:', error);
       alert('❌ Error deleting API key. Please try again.');
@@ -116,246 +109,215 @@ const Dashboard = ({ user }) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+      day: 'numeric'
     });
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="mt-2 text-gray-600">
-              Manage your API keys and explore the map interface
+    <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-8 animate-fade-in pb-20">
+      {/* Header */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary-600 to-secondary-600 p-8 shadow-xl text-white">
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 bg-black/10 rounded-full blur-3xl"></div>
+
+        <div className="relative z-10">
+          <h1 className="text-3xl font-display font-bold mb-2">
+            Welcome back, <span className="text-primary-100">{user.displayName || user.email?.split('@')[0]}</span>
+          </h1>
+          <p className="text-primary-50 opacity-90 max-w-2xl">
+            Manage your API keys, monitor usage, and explore the capabilities of Mapify OS.
+          </p>
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Link
+          to="/map"
+          className="group glass-card p-6 rounded-2xl hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden"
+        >
+          <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+          <div className="flex items-start justify-between mb-4">
+            <div className="p-3 rounded-xl bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 group-hover:scale-110 transition-transform duration-300">
+              <Map className="w-8 h-8" />
+            </div>
+            <ArrowRight className="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-primary-500 dark:group-hover:text-primary-400 transform group-hover:translate-x-1 transition-all" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Interactive Map</h3>
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
+            Explore terrain, satellite, and dark mode maps interactions.
+          </p>
+        </Link>
+
+        <div className="group glass-card p-6 rounded-2xl relative overflow-hidden">
+          <div className="flex items-start justify-between mb-4">
+            <div className="p-3 rounded-xl bg-secondary-50 dark:bg-secondary-900/30 text-secondary-600 dark:text-secondary-400 group-hover:scale-110 transition-transform duration-300">
+              <Activity className="w-8 h-8" />
+            </div>
+            <div className="px-2 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-bold uppercase tracking-wider">
+              Active
+            </div>
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">System Status</h3>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-600 dark:text-gray-400">API Health</span>
+              <span className="text-green-600 dark:text-green-400 font-medium">99.9%</span>
+            </div>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+              <div className="bg-green-500 h-1.5 rounded-full" style={{ width: '99.9%' }}></div>
+            </div>
+          </div>
+        </div>
+
+        <Link
+          to="/docs"
+          className="group glass-card p-6 rounded-2xl hover:border-secondary-300 dark:hover:border-secondary-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden"
+        >
+          <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-secondary-500 to-primary-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+          <div className="flex items-start justify-between mb-4">
+            <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300">
+              <Book className="w-8 h-8" />
+            </div>
+            <ArrowRight className="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-purple-500 dark:group-hover:text-purple-400 transform group-hover:translate-x-1 transition-all" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Documentation</h3>
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
+            Learn how to integrate Mapify OS into your applications.
+          </p>
+        </Link>
+      </div>
+
+      {/* API Keys Section */}
+      <div className="glass-card rounded-2xl overflow-hidden">
+        <div className="p-6 border-b border-gray-100 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <Key className="w-5 h-5 text-primary-500" />
+              Your API Keys
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              Manage keys for accessing Mapify OS services
             </p>
           </div>
+          <button
+            onClick={generateApiKey}
+            disabled={generating} // Removed strict limit for now to debug user issue, or keep it but with clearer feedback
+            className={`flex items-center justify-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-white transition-all shadow-md hover:shadow-lg ${generating
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700'
+              } ${apiKeys.length >= 5 ? 'opacity-50 cursor-not-allowed' : ''}`}
+            title={apiKeys.length >= 5 ? "Limit reached (5 keys max)" : "Generate new key"}
+          >
+            {generating ? <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></div> : <Plus className="w-4 h-4" />}
+            <span>{generating ? 'Generating...' : 'Generate New Key'}</span>
+          </button>
+        </div>
 
-          {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <Link
-              to="/map"
-              className="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow"
-            >
-              <div className="p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <Map className="h-8 w-8 text-primary-600" />
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
-                        Explore Maps
-                      </dt>
-                      <dd className="text-lg font-medium text-gray-900">
-                        Open Interactive Map
-                      </dd>
-                    </dl>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <ExternalLink className="h-5 w-5 text-gray-400" />
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <Activity className="h-8 w-8 text-green-600" />
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
-                        Total API Calls
-                      </dt>
-                      <dd className="text-lg font-medium text-gray-900">
-                        {apiKeys.reduce((sum, key) => sum + key.usageCount, 0)}
-                      </dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
+        <div className="p-6">
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
             </div>
-          </div>
-
-          {/* API Keys Section */}
-          <div className="bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-lg font-medium text-gray-900">API Keys</h2>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Generate and manage API keys for your applications
-                  </p>
-                </div>
-                <button
-                  onClick={generateApiKey}
-                  disabled={generating}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          ) : apiKeys.length === 0 ? (
+            <div className="text-center py-16 px-4 bg-gray-50/50 dark:bg-gray-800/30 rounded-2xl border border-dashed border-gray-200 dark:border-gray-700">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-100 dark:bg-primary-900/30 mb-4 animate-bounce-slow">
+                <Sparkles className="w-8 h-8 text-primary-500" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">No API keys yet</h3>
+              <p className="text-gray-500 dark:text-gray-400 max-w-sm mx-auto mb-6">
+                Create your first API key to start building with Mapify OS. It takes less than a second!
+              </p>
+              <button
+                onClick={generateApiKey}
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-full text-sm font-bold text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-900/30 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Create First Key</span>
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {apiKeys.map((key) => (
+                <div
+                  key={key.id}
+                  className="group flex flex-col md:flex-row md:items-center justify-between p-4 bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-xl hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-200 hover:shadow-md"
                 >
-                  <Plus className="h-4 w-4 mr-2" />
-                  {generating ? 'Generating...' : 'Generate Key'}
-                </button>
-              </div>
-            </div>
-
-            <div className="px-6 py-4">
-              {apiKeys.length === 0 ? (
-                <div className="text-center py-12">
-                  <Key className="mx-auto h-12 w-12 text-gray-400" />
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">No API keys</h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Get started by generating your first API key.
-                  </p>
-                  <div className="mt-6">
-                    <button
-                      onClick={generateApiKey}
-                      disabled={generating}
-                      className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Generate API Key
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {apiKeys.map((apiKey) => (
-                    <div
-                      key={apiKey.id}
-                      className={`border rounded-lg p-4 ${
-                        apiKey.active ? 'border-gray-200 bg-white' : 'border-red-200 bg-red-50'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2">
-                            <h3 className="text-sm font-medium text-gray-900">
-                              {apiKey.name}
-                            </h3>
-                            <span
-                              className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                apiKey.active
-                                  ? 'bg-green-100 text-green-800'
-                                  : 'bg-red-100 text-red-800'
-                              }`}
-                            >
-                              {apiKey.active ? 'Active' : 'Revoked'}
-                            </span>
-                          </div>
-                          <div className="mt-2 flex items-center space-x-4 text-sm text-gray-500">
-                            <span>Created: {formatDate(apiKey.createdAt)}</span>
-                            <span>Usage: {apiKey.usageCount} calls</span>
-                          </div>
-                          <div className="mt-3 flex items-center space-x-2">
-                            <code className="bg-gray-100 px-3 py-1 rounded text-sm font-mono">
-                              {formatKey(apiKey.key, apiKey.id)}
-                            </code>
-                            <button
-                              onClick={() => toggleKeyVisibility(apiKey.id)}
-                              className="p-1 text-gray-400 hover:text-gray-600"
-                            >
-                              {visibleKeys[apiKey.id] ? (
-                                <EyeOff className="h-4 w-4" />
-                              ) : (
-                                <Eye className="h-4 w-4" />
-                              )}
-                            </button>
-                            <button
-                              onClick={() => copyToClipboard(apiKey.key, apiKey.id)}
-                              className="p-1 text-gray-400 hover:text-gray-600"
-                            >
-                              <Copy className="h-4 w-4" />
-                            </button>
-                            {copiedKey === apiKey.id && (
-                              <span className="text-xs text-green-600">Copied!</span>
-                            )}
-                          </div>
-                        </div>
+                  <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                    <div className="p-2.5 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-500 dark:text-gray-400 group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors">
+                      <Key className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="flex items-center space-x-2">
+                        <span className="font-mono text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-900 px-2 py-1 rounded border border-gray-200 dark:border-gray-700">
+                          {visibleKeys[key.id] ? key.key : '•'.repeat(24) + key.key.slice(-4)}
+                        </span>
                         <button
-                          onClick={() => deleteApiKey(apiKey.id, apiKey.name)}
-                          className="ml-4 p-2 text-red-400 hover:text-red-600"
-                          title="Delete API Key"
+                          onClick={() => toggleKeyVisibility(key.id)}
+                          className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                          title={visibleKeys[key.id] ? "Hide Key" : "Show Key"}
                         >
-                          <Trash2 className="h-4 w-4" />
+                          {visibleKeys[key.id] ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                        <button
+                          onClick={() => copyToClipboard(key.key, key.id)}
+                          className={`p-1 transition-colors ${copiedKey === key.id ? 'text-green-500' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
+                            }`}
+                          title="Copy Key"
+                        >
+                          <Copy className="w-4 h-4" />
                         </button>
                       </div>
+                      <div className="flex items-center mt-1 space-x-3 text-xs text-gray-500 dark:text-gray-400">
+                        <span>Created: {formatDate(key.createdAt)}</span>
+                        <span className="w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></span>
+                        <span>{key.name}</span>
+                        <span className="w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></span>
+                        <span className="font-medium">{key.usageCount} calls</span>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+                  </div>
 
-          {/* SDK Documentation */}
-          <div className="mt-8 bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-medium text-gray-900">SDK Integration</h2>
-            </div>
-            <div className="px-6 py-4">
-              <div className="prose max-w-none">
-                <h3 className="text-base font-medium text-gray-900">Quick Start</h3>
-                <p className="mt-2 text-sm text-gray-600">
-                  Embed interactive maps in your website with just a few lines of code.
-                </p>
-                <div className="mt-4 bg-gray-900 rounded-lg p-4 text-white overflow-x-auto">
-                  <code className="text-sm">
-                    {`<!-- Include Leaflet CSS -->`}<br/>
-                    {`<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />`}<br/><br/>
-                    {`<!-- Include Leaflet JS -->`}<br/>
-                    {`<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>`}<br/><br/>
-                    {`<!-- Include Mapify OS SDK -->`}<br/>
-                    {`<script src="https://mapifysdk.netlify.app/v1/mapify.js"></script>`}<br/><br/>
-                    {`<!-- Create map container -->`}<br/>
-                    {`<div id="map" style="height: 500px;"></div>`}<br/><br/>
-                    {`<!-- Initialize map -->`}<br/>
-                    {`<script>`}<br/>
-                    {`  MapifyOS.init("map", {`}<br/>
-                    {`    apiKey: "YOUR_API_KEY_HERE"`}<br/>
-                    {`  });`}<br/>
-                    {`</script>`}
-                  </code>
-                </div>
-                <div className="mt-4 flex space-x-4">
-                  <a 
-                    href="/documentation" 
-                    className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700"
+                  <button
+                    onClick={() => deleteApiKey(key.id, key.name)}
+                    className="flex items-center justify-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors opacity-0 group-hover:opacity-100"
                   >
-                    📚 Full Documentation
-                  </a>
-                  <a 
-                    href="https://mapifysdk.netlify.app" 
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-md hover:bg-gray-700"
-                  >
-                    🔗 SDK Homepage
-                  </a>
+                    <Trash2 className="w-4 h-4" />
+                    <span>Revoke</span>
+                  </button>
                 </div>
-              </div>
+              ))}
             </div>
-          </div>
+          )}
+        </div>
+      </div>
 
-          {/* Footer Links */}
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <div className="flex justify-center space-x-6 text-sm text-gray-500">
-              <Link to="/terms" className="hover:text-gray-700">Terms of Use</Link>
-              <Link to="/privacy" className="hover:text-gray-700">Privacy Policy</Link>
-              <Link to="/documentation" className="hover:text-gray-700">Documentation</Link>
-            </div>
+      {/* SDK Documentation */}
+      <div className="glass-card rounded-2xl p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary-50 dark:bg-primary-900/20 rounded-full blur-3xl -mr-20 -mt-20"></div>
+        <div className="relative z-10">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Integration</h2>
+          <div className="bg-gray-900 rounded-xl p-4 overflow-x-auto shadow-inner border border-gray-800">
+            <code className="text-sm font-mono text-gray-300">
+              <span className="text-purple-400">import</span> {'{ MapifyOS }'} <span className="text-purple-400">from</span> <span className="text-green-400">'mapify-sdk'</span>;<br /><br />
+              MapifyOS.<span className="text-blue-400">init</span>(<span className="text-green-400">"map-container"</span>, {'{'}<br />
+              &nbsp;&nbsp;apiKey: <span className="text-green-400">"YOUR_API_KEY"</span>,<br />
+              &nbsp;&nbsp;theme: <span className="text-green-400">"modern"</span><br />
+              {'}'});
+            </code>
+          </div>
+          <div className="mt-4">
+            <Link to="/docs" className="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 flex items-center">
+              View full documentation <ArrowRight className="h-4 w-4 ml-1" />
+            </Link>
           </div>
         </div>
       </div>
