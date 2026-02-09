@@ -5,6 +5,45 @@ const axios = require('axios');
 
 admin.initializeApp();
 
+// ============================================
+// PERFORMANCE: API Key Caching (A-01)
+// ============================================
+
+// Simple in-memory cache for verified API keys
+// TTL: 5 minutes - balances freshness with performance
+const apiKeyCache = new Map();
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+/**
+ * Get a cached API key document reference
+ * @param {string} apiKey - The API key to look up
+ * @returns {Object|null} Cached data with docRef, or null if not cached/expired
+ */
+function getCachedKey(apiKey) {
+  const cached = apiKeyCache.get(apiKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+    return cached;
+  }
+  // Expired or not found - clean up
+  apiKeyCache.delete(apiKey);
+  return null;
+}
+
+/**
+ * Cache an API key lookup result
+ * @param {string} apiKey - The API key
+ * @param {Object} docRef - Firestore document reference
+ */
+function setCachedKey(apiKey, docRef) {
+  // Prevent unbounded cache growth - limit to 1000 keys
+  if (apiKeyCache.size >= 1000) {
+    // Remove oldest entry
+    const firstKey = apiKeyCache.keys().next().value;
+    apiKeyCache.delete(firstKey);
+  }
+  apiKeyCache.set(apiKey, { docRef, timestamp: Date.now() });
+}
+
 // API Key Verification Endpoint for SDK
 exports.verify = functions.https.onRequest(async (req, res) => {
   cors(req, res, async () => {
@@ -149,20 +188,30 @@ exports.search = functions.https.onRequest(async (req, res) => {
         return res.status(401).json({ error: 'API key is required' });
       }
 
-      // Validate API key
-      const keysSnapshot = await admin.firestore()
-        .collectionGroup('keys')
-        .where('key', '==', apiKey)
-        .where('active', '==', true)
-        .limit(1)
-        .get();
+      // A-01: Check cache first to avoid Firestore read on repeated requests
+      let keyDocRef;
+      const cached = getCachedKey(apiKey);
+      
+      if (cached) {
+        // Cache hit - use cached reference
+        keyDocRef = cached.docRef;
+      } else {
+        // Cache miss - query Firestore
+        const keysSnapshot = await admin.firestore()
+          .collectionGroup('keys')
+          .where('key', '==', apiKey)
+          .where('active', '==', true)
+          .limit(1)
+          .get();
 
-      if (keysSnapshot.empty) {
-        return res.status(401).json({ error: 'Invalid or inactive API key' });
+        if (keysSnapshot.empty) {
+          return res.status(401).json({ error: 'Invalid or inactive API key' });
+        }
+
+        keyDocRef = keysSnapshot.docs[0].ref;
+        // Cache for future requests
+        setCachedKey(apiKey, keyDocRef);
       }
-
-      const keyDoc = keysSnapshot.docs[0];
-      const keyData = keyDoc.data();
 
       // Get search parameters
       const { lat, lon, type = 'hospital', radius = 3000 } = req.query;
@@ -210,8 +259,8 @@ exports.search = functions.https.onRequest(async (req, res) => {
         }))
         .slice(0, 50); // Limit results
 
-      // Update usage count
-      await keyDoc.ref.update({
+      // Update usage count (still per-request, but read is now cached)
+      await keyDocRef.update({
         usageCount: admin.firestore.FieldValue.increment(1)
       });
 
