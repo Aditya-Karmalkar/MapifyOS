@@ -7,7 +7,6 @@ The open, customizable alternative to Google Maps with built-in authentication, 
 [![GitHub SDK](https://img.shields.io/badge/SDK-GitHub-black?style=for-the-badge)](https://github.com/Aditya-Karmalkar/sdk)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-**Commit on OSCG Branch.**
 
 ## 🎯 Overview
 
@@ -93,6 +92,11 @@ Mapify OS is a complete, production-ready web application that serves as an open
 
 ## Quick Start
 
+> 💡 **Beginner Note**  
+> If you are new to Firebase or pnpm, follow the steps exactly as written.  
+> No prior Firebase experience is required to run this project locally.
+
+
 ### Prerequisites
 
 - Node.js (v16 or higher)
@@ -155,6 +159,17 @@ Start Firebase emulators (optional):
 ```bash
 firebase emulators:start
 ```
+
+## 📌 Common Commands
+
+| Command | Description |
+|-------|-------------|
+| `pnpm install` | Install all project dependencies |
+| `pnpm start` | Start the React development server |
+| `pnpm run build` | Build the project for production |
+| `firebase emulators:start` | Run Firebase services locally |
+| `firebase deploy` | Deploy project to Firebase |
+
 
 ### Deployment
 
