@@ -51,7 +51,7 @@ const AppContent = () => {
 
   // Show email verification screen if needed
   if (needsVerification) {
-    console.log('📧 Showing email verification screen for:', user.email);
+    console.log('📧 Showing email verification screen ');
     return <EmailVerification user={user} onVerificationCheck={handleVerificationCheck} />;
   }
 

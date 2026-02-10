@@ -40,7 +40,7 @@ const Login = () => {
         console.log('🔵 Starting signup flow...');
         
         userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log('🔵 User created, UID:', userCredential.user.uid);
+        console.log('🔵 User created, UID:');
         
         // Create user document in Firestore
         try {
