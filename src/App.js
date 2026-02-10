@@ -10,6 +10,7 @@ import Documentation from './components/Documentation';
 import TermsOfUse from './components/TermsOfUse';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Navbar from './components/Navbar';
+import EmailVerification from './components/EmailVerification';
 
 const AppContent = () => {
   const [user, setUser] = useState(null);
@@ -25,12 +26,33 @@ const AppContent = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleVerificationCheck = async () => {
+    // Reload the current user to get updated emailVerified status
+    if (auth.currentUser) {
+      await auth.currentUser.reload();
+      setUser({ ...auth.currentUser });
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
       </div>
     );
+  }
+
+  // Check if user needs email verification
+  // Google users are already verified, so skip verification for them
+  const needsVerification = user && 
+    !user.emailVerified && 
+    user.providerData && 
+    !user.providerData.some(provider => provider.providerId === 'google.com');
+
+  // Show email verification screen if needed
+  if (needsVerification) {
+    console.log('📧 Showing email verification screen ');
+    return <EmailVerification user={user} onVerificationCheck={handleVerificationCheck} />;
   }
 
   return (

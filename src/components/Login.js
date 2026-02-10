@@ -23,21 +23,53 @@ const Login = () => {
 
   const handleEmailAuth = async (e) => {
     e.preventDefault();
+    console.log('🔵 handleEmailAuth called, isLogin:', isLogin);
     setLoading(true);
     setError('');
 
     try {
       let userCredential;
       if (isLogin) {
+        // Login flow
+        console.log('🔵 Starting login flow...');
         userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log('🔵 User logged in, emailVerified:', userCredential.user.emailVerified);
+        // If not verified, App.js will show the verification screen
       } else {
+        // Signup flow
+        console.log('🔵 Starting signup flow...');
+        
         userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        await createUserDocument(userCredential.user);
+        console.log('🔵 User created, UID:');
+        
+        // Create user document in Firestore
+        try {
+          await createUserDocument(userCredential.user);
+          console.log('🔵 User document created in Firestore');
+        } catch (firestoreError) {
+          console.error('⚠️ Firestore error:', firestoreError);
+        }
+        
+        console.log('🔵 Signup complete, EmailVerification screen will send the verification email');
+        // EmailVerification component will automatically send verification email when it mounts
       }
     } catch (error) {
-      setError(error.message);
+      console.error('🔴 Error in handleEmailAuth:', error.code, error.message);
+      
+      if (error.code === 'auth/email-already-in-use') {
+        setError('This email is already registered. Please sign in instead.');
+      } else if (error.code === 'auth/weak-password') {
+        setError('Password should be at least 6 characters long.');
+      } else if (error.code === 'auth/invalid-email') {
+        setError('Please enter a valid email address.');
+      } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        setError('Invalid email or password.');
+      } else {
+        setError(error.message);
+      }
     }
     setLoading(false);
+    console.log('🔵 handleEmailAuth completed');
   };
 
   const handleGoogleAuth = async () => {
